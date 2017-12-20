@@ -28,6 +28,15 @@ var roster_slots = {0:'QB',1: 'QB', 2:'RB',3:'WR', 4:'WR',5: 'K', 6:'TE',23:'FLE
 
 export default {
   name: 'app',
+  sockets:{
+    connect: function(){
+      console.log('socket connected')
+    },
+    update: function(val){
+      console.log('updated')
+      this.matchup = val
+    }
+  },
   data () {
     return {
       matchup: []
