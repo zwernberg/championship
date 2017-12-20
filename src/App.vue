@@ -2,20 +2,17 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h1>Schumacher Championship</h1>
-    <h3> Little Minnies  - Neal Schumacher</h3> Projected {{projectedPoints(nealPlayers)}}
     <ul>
-      <li v-for='(player, index) in sorted(nealPlayers)' :key='index'>
-        <b>Name</b>: {{player.player.firstName}}  {{player.player.lastName}}
-        <b>Position</b>: {{getPosition(player)}}
-        <b>Projected</b>: {{player.currentPeriodProjectedStats.appliedStatTotal}}
-      </li>
-    </ul>
-    <h3> Quinley's Mother  - Kensey Schultz </h3> Projected {{projectedPoints(kenseyPlayers)}}
-    <ul>
-      <li v-for='(player, index) in sorted(kenseyPlayers)' :key='index'>
-        <b>Name</b>: {{player.player.firstName}}  {{player.player.lastName}}
-        <b>Position</b>: {{getPosition(player)}}
-        <b>Projected</b>: {{player.currentPeriodProjectedStats.appliedStatTotal}}
+      <li v-for='(team,index) in matchup' :key='index'>
+        <h3>{{team.team_name}} - {{team.team_owner}}</h3> Projected <b>{{team.projected_total}}</b>
+        <ul>
+          <li v-for='(player, index) in sorted(team.players)' :key='index'>
+            <b>{{getPosition(player)}}</b>: {{player.fullName}}
+            <b>Projected</b>: {{player.projectedPoints}}
+            <b>Actual</b>: {{player.actualPoints}}
+
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -33,26 +30,21 @@ export default {
   name: 'app',
   data () {
     return {
-      nealPlayers: [],
-      kenseyPlayers: [],
+      matchup: []
     }
   },
   created() {
-    axios.get('http://games.espn.com/ffl/api/v2/playerInfo?seasonId=2017&leagueId=1477590&useCurrentPeriodRealStats=true&useCurrentPeriodProjectedStats=true&playerId=16724,18218,13981,16800,15072,15839,14198,9354')
+    axios.get('http://schumacher.football/api/championship/')
     .then(response => {
-      this.nealPlayers=response.data.playerInfo.players;
-    });
-    axios.get('http://games.espn.com/ffl/api/v2/playerInfo?seasonId=2017&leagueId=1477590&useCurrentPeriodRealStats=true&useCurrentPeriodProjectedStats=true&playerId=13994,12514,17683,14912,17929,17668,17933,18409')
-    .then(response => {
-      this.kenseyPlayers=response.data.playerInfo.players;
+      this.matchup=response.data;
     });
   },
   methods: {
     sorted: players => {
-      return _.orderBy(players, 'player.defaultPositionId', 'asc');
+      return _.orderBy(players, 'position', 'asc');
     },
     getPosition: player => {
-      return roster_slots[player.player.defaultPositionId];
+      return roster_slots[player.position];
     },
     projectedPoints: players => {
       var total = 0;
