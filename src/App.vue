@@ -1,20 +1,25 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>Schumacher Championship</h1>
-    <ul>
-      <li v-for='(team,index) in matchup' :key='index'>
-        <h3>{{team.team_name}} - {{team.team_owner}}</h3> Projected <b>{{team.projected_total}}</b>
-        <ul>
-          <li v-for='(player, index) in sorted(team.players)' :key='index'>
-            <b>{{getPosition(player)}}</b>: {{player.fullName}}
-            <b>Projected</b>: {{player.projectedPoints}}
-            <b>Actual</b>: {{player.actualPoints}}
-
-          </li>
-        </ul>
-      </li>
-    </ul>
+        <h1 class="text-center display-3 mt-5">Schumacher Superb Owl</h1>
+        <div class="container mt-5" >
+            <div class="row" >
+                <div class="col-sm-6" v-for='(team,index) in matchup' :key='index'>
+                    <h2 class="text-center">{{team.team_name}}</h2>
+                    <h5 class="text-center text-muted font-italic">{{team.team_owner}} - {{team.division}} Division Champion</h5>
+                    <table class="table">
+                        <tbody><tr v-for='(player, index) in sorted(team.players)' :key='index'>
+                            <td><p class="text-left font-weight-bold">{{getPosition(player)}}</p></td>
+                            <td><p class="text-left">{{player.fullName}}</p></td>
+                            <td><p class="text-right">{{player.actualPoints}}</p></td>
+                        </tr>
+                            <tr><td><p class="text-left font-weight-bold">TOTAL</p></td>
+                            <td><p class="text-left"></p></td>
+                            <td><p class="text-right font-weight-bold">{{team.actual_total}}</p></td>
+                        </tr>
+                    </tbody></table>
+                </div>
+              </div>
+        </div>
   </div>
 </template>
 
