@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-        <h1 class="text-center display-3 mt-5">Schumacher Superb Owl</h1>
+        <h1 class="text-center display-4 mt-5 ">Schumacher Superb Owl</h1>
         <div class="container mt-5" >
             <div class="row" >
                 <div class="col-sm-6" v-for='(team,index) in matchup' :key='index'>
+                  <div class="text-center">
+                        <img class="img-thumbnail rounded" v-bind:src="team.avatarUrl">
+                    </div>
                     <h2 class="text-center">{{team.team_name}}</h2>
                     <h5 class="text-center text-muted font-italic">{{team.team_owner}} - {{team.division}} Division Champion</h5>
                     <table class="table">
