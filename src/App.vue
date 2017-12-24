@@ -65,6 +65,9 @@ export default {
     update: function(val){
       console.log('updated')
       this.matchup = val
+    },
+    start_messages: function(val) {
+      this.messages = val;
     }
   },
   data () {
