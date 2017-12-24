@@ -33,7 +33,7 @@
           <h3>Messages (newest on top)</h3>
           <div class="row" v-for='(message,index) in messages' :key='index'>
             <div class="col-sm-6">
-              {{message.name}}: {{message.msg}}
+              <b>{{message.name}}</b>: {{message.msg}}
             </div>
           </div>
         </div>
