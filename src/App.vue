@@ -19,6 +19,11 @@
                             <td><p class="text-left"></p></td>
                             <td><p class="text-right font-weight-bold">{{team.actual_total}}</p></td>
                         </tr>
+                        <tr>
+                            <tr><td><p class="text-left font-weight-bold">Projected</p></td>
+                            <td><p class="text-left"></p></td>
+                            <td><p class="text-right font-weight-bold">{{team.projected_total}}</p></td>
+                        </tr>
                     </tbody></table>
                 </div>
               </div>
