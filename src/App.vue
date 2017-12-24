@@ -28,6 +28,20 @@
                 </div>
               </div>
         </div>
+
+        <div class="container mt-5 pre-scrollable" id="chatWindow" style="height: 200px;">
+          <h3>Messages (newest on top)</h3>
+          <div class="row" v-for='(message,index) in messages' :key='index'>
+            <div class="col-sm-6">
+              {{message.name}}: {{message.msg}}
+            </div>
+          </div>
+        </div>
+        <div class="container mt-5" >
+          <input type="text" class="form-control" v-model="name" placeholder="name">
+          <input type="text" class="form-control" v-model="newMessage" placeholder="message">
+          <button type="button" class="btn btn-primary" v-on:click="clickButton">Send</button>
+        </div>
   </div>
 </template>
 
@@ -45,6 +59,9 @@ export default {
     connect: function(){
       console.log('socket connected')
     },
+    message: function (val) {
+      this.messages.unshift(val);
+    },
     update: function(val){
       console.log('updated')
       this.matchup = val
@@ -52,7 +69,10 @@ export default {
   },
   data () {
     return {
-      matchup: []
+      matchup: [],
+      messages: [],
+      name: '',
+      newMessage: '',
     }
   },
   created() {
@@ -74,6 +94,15 @@ export default {
         total += element.currentPeriodProjectedStats.appliedStatTotal;
       });
       return Math.round(total * 100) / 100;
+    },
+    clickButton: function(val){
+        // $socket is socket.io-client instance
+        var data = {
+          name: this.name,
+          msg: this.newMessage,
+        }
+        this.newMessage = '';
+        this.$socket.emit('message', data);
     }
   }
 }
