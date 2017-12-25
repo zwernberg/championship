@@ -33,7 +33,7 @@
           <h3>Messages (newest on top)</h3>
           <div class="row" v-for='(message,index) in messages' :key='index'>
             <div class="col-sm-6">
-              <b>{{message.name}}</b>: {{message.msg}}
+              <b>{{message.name}}</b>: {{message.message}}
             </div>
           </div>
         </div>
@@ -66,9 +66,6 @@ export default {
       console.log('updated')
       this.matchup = val
     },
-    start_messages: function(val) {
-      this.messages = val;
-    }
   },
   data () {
     return {
@@ -82,6 +79,10 @@ export default {
     axios.get('http://schumacher.football/api/championship/')
     .then(response => {
       this.matchup=response.data;
+    });
+    axios.get('http://schumacher.football/api/championship/')
+      .then(response => {
+      this.messages = response.data;
     });
   },
   methods: {
@@ -102,7 +103,7 @@ export default {
         // $socket is socket.io-client instance
         var data = {
           name: this.name,
-          msg: this.newMessage,
+          message: this.newMessage,
         }
         this.newMessage = '';
         this.$socket.emit('message', data);
