@@ -80,7 +80,7 @@ export default {
     .then(response => {
       this.matchup=response.data;
     });
-    axios.get('http://schumacher.football/api/championship/')
+    axios.get('http://schumacher.football/api/messages/')
       .then(response => {
       this.messages = response.data;
     });
