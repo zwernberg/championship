@@ -83,6 +83,7 @@ export default {
     axios.get('http://schumacher.football/api/messages/')
       .then(response => {
       this.messages = response.data;
+      this.messages.reverse()
     });
   },
   methods: {
